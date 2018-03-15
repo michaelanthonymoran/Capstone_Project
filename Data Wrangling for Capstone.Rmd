@@ -1,0 +1,130 @@
+---
+title: "Data Wrangling for Capstone Project"
+author: "Michael Moran"
+date: "March 12, 2018"
+output: html_document
+---
+
+The goal of data wrangling for the housing prices data set is to prepare the dataset for use in regression analysis. This included replacing NA values with zeros, creating dummy variables for categorical variables, and removing the original columns containing the categorical variables. 
+
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(dummies)
+library(readr)
+library(xlsx)
+```
+ 
+The data table was read into R and assigned to a variable. 
+
+```{r}
+train <- read_csv("C:/Users/Mike/Downloads/train.csv")
+```
+
+Then a new data frame was created with the NA values from the original data set having been replaced with zeroes.  
+
+```{r}
+newframe <- train %>% replace(is.na(train), 0)
+```
+
+Of the categorical variables present in the opriginal data set, I identified a group of 30 variables that I believed could potentially affect the price of a house. I then narrowed this list of variables down to 15, and converted each categorical variable into dummy variables. After I finished converting a categorical variable, I removed the original column from the data set, and proceeded likewise through each variable until the data set was ready for statistical analysis and regression. 
+
+
+```{r}
+daf <- dummy(train$MSSubClass)
+daf2 <- cbind(newframe, daf)
+daf2[,c("MSSubClass")] <- list(NULL)
+```
+I proceeded likewise through each of the selected variables.
+
+```{r}
+daf3 <- dummy(daf2$LotConfig)
+daf4 <- cbind(daf2, daf3)
+daf4[,c("LotConfig")] <- list(NULL)
+```
+```{r}
+daf5 <- dummy(daf4$Condition1)
+daf6 <- cbind(daf4, daf5)
+daf6[,c("Condition1")] <- list(NULL)
+```
+```{r}
+daf7 <- dummy(daf6$BldgType)
+daf8 <- cbind(daf6, daf7)
+daf8[,c("BldgType")] <- list(NULL)
+```
+```{r}
+daf9 <- dummy(daf8$HouseStyle)
+daf10 <- cbind(daf8, daf9)
+daf10[,c("HouseStyle")] <- list(NULL)
+```
+```{r}
+daf11 <- dummy(daf10$RoofStyle)
+daf12 <- cbind(daf10, daf11)
+daf12[,c("RoofStyle")] <- list(NULL)
+```
+```{r}
+daf13 <- dummy(daf12$ExterCond)
+daf14 <- cbind(daf12, daf13)
+daf14[,c("ExterCond")] <- list(NULL)
+```
+```{r}
+daf15 <- dummy(daf14$Foundation)
+daf16 <- cbind(daf14, daf15)
+daf16[,c("Foundation")] <- list(NULL)
+```
+```{r}
+daf17 <- dummy(daf16$BsmtCond)
+daf18 <- cbind(daf16, daf17)
+daf18[,c("BsmtCond")] <- list(NULL)
+```
+```{r}
+daf19 <- dummy(daf18$Heating)
+daf20 <- cbind(daf18, daf19)
+daf20[,c("Heating")] <- list(NULL)
+```
+```{r}
+daf21 <- dummy(daf20$KitchenQual)
+daf22 <- cbind(daf20, daf21)
+daf22[,c("KitchenQual")] <- list(NULL)
+```
+```{r}
+daf23 <- dummy(daf22$GarageType)
+daf24 <- cbind(daf22, daf23)
+daf24[,c("GarageType")] <- list(NULL)
+```
+```{r}
+daf25 <- dummy(daf24$GarageCond)
+daf26 <- cbind(daf24, daf25)
+daf26[,c("GarageCond")] <- list(NULL)
+```
+```{r}
+daf27 <- dummy(daf26$PoolQC)
+daf28 <- cbind(daf26, daf27)
+daf28[,c("PoolQC")] <- list(NULL)
+```
+```{r}
+daf29 <- dummy(daf28$Fence)
+daf30 <- cbind(daf28, daf29)
+daf30[,c("Fence")] <- list(NULL)
+```
+```{r}
+daf31 <- dummy(daf30$SaleCondition)
+daf32 <- cbind(daf30, daf31)
+daf32[,c("SaleCondition")] <- list(NULL)
+```
+
+
+This approach could be replaced by a more efficient method of creating the dummy variables in R. Using one line of code, all of the variables were converted together instead of coding 15 variables one by one, saving time and processing power. 
+
+```{r}
+dafn <- dummy.data.frame(as.data.frame(newframe), names = c("MSSubClass","LotConfig","Condition1","BldgType","HouseStyle","RoofStyle","ExterCond","Foundation","BsmtCond","Heating","KitchenQual","GarageType","PoolQC","Fence","SaleCondition") , sep = ".")
+```
+
+The last step was to write the data frame to an Excel file for review. 
+
+```{r}
+write.xlsx(dafn, "C:/Users/Mike/Documents/Foundations of Data Science/Capstone Files/cleaned_data.xlsx")
+```
+
+
