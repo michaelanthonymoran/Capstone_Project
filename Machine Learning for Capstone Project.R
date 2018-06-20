@@ -181,7 +181,7 @@ Retuned.rf.model <- randomForest(SalePrice ~ GrLivArea+ FullBath+ BedroomAbvGr+ 
 
 Retuned.svm.model <- svm(SalePrice ~ GrLivArea+ FullBath+ BedroomAbvGr+ GarageTypeAttchd+ MSSubClass60+ OverallCond+ GarageTypeDetchd+ MSSubClass20, data = trainset, cost = 100, gamma = 1)
 
-#Generate predicted SalePrice values for the train set and the test set using the Tuned Random Forest and Support Vectior Machines models 
+#Generate predicted SalePrice values for the train set and the test set using the Retuned Random Forest and Support Vectior Machines models 
 Retuned.predict_rf.train<-predict(Retuned.rf.model, newdata=trainset)
 print(Retuned.predict_rf.train)
 
@@ -196,21 +196,21 @@ Retuned.predict_svm.test<-predict(Retuned.svm.model, newdata=testset)
 print(Retuned.predict_svm.test)
 
 
-# Calculate error for the Tuned Random Forest Model
+# Calculate error for the Retuned Random Forest Model
 Retuned.error_rf.train<- Retuned.predict_rf.train - trainset$SalePrice
 print(Retuned.error_rf.train)
 
 Retuned.error_rf.test <- Retuned.predict_rf.test - testset$SalePrice
 print(Retuned.error_rf.test)
 
-# Function that returns Root Mean Squared Error for the Tuned Random Forest Model
+# Function that returns Root Mean Squared Error for the Retuned Random Forest Model
 Retuned.rmse_rf.train <- sqrt(mean(Retuned.error_rf.train^2))
 print(Retuned.rmse_rf.train)
 
 Retuned.rmse_rf.test <- sqrt(mean(Retuned.error_rf.test^2))
 print(Retuned.rmse_rf.test)
 
-# Function that returns Mean Absolute Error for the Tuned Random Forest Model
+# Function that returns Mean Absolute Error for the Retuned Random Forest Model
 Retuned.mae_rf.train <- mean(abs(Retuned.error_rf.train))
 print(Retuned.mae_rf.train)
 
@@ -218,21 +218,21 @@ Retuned.mae_rf.test <- mean(abs(Retuned.error_rf.test))
 print(Retuned.mae_rf.test)
 
 
-# Calculate error for the Tuned Support Vector Machines Model
+# Calculate error for the Retuned Support Vector Machines Model
 Retuned.error_svm.train <- Retuned.predict_svm.train - trainset$SalePrice
 print(Retuned.error_svm.train)
 
 Retuned.error_svm.test <- Retuned.predict_svm.test - testset$SalePrice
 print(Retuned.error_svm.test)
 
-# Function that returns Root Mean Squared Error for the Tuned Support Vector Machines Model
+# Function that returns Root Mean Squared Error for the Retuned Support Vector Machines Model
 Retuned.rmse_svm.train <- sqrt(mean(Retuned.error_svm.train^2))
 print(Retuned.rmse_svm.train)
 
 Retuned.rmse_svm.test <- sqrt(mean(Retuned.error_svm.test^2))
 print(Retuned.rmse_svm.test)
 
-# Function that returns Mean Absolute Error for the Tuned Support Vector Machines Model
+# Function that returns Mean Absolute Error for the Retuned Support Vector Machines Model
 Retuned.mae_svm.train <- mean(abs(Retuned.error_svm.train))
 print(Retuned.mae_svm.train)
 
