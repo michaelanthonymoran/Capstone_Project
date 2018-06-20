@@ -240,7 +240,5 @@ Retuned.mae_svm.test <- mean(abs(Retuned.error_svm.test))
 print(Retuned.mae_svm.test)
 
 
-###
-mean(testset$SalePrice)
-mean(trainset$SalePrice)
+
 
